@@ -1,0 +1,11 @@
+* {
+    border: 1px solid red;
+}
+
+.memory {
+    border: 1px solid blue;
+}
+
+.tile {
+    border: 1px solid green;
+}
