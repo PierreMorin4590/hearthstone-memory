@@ -17,19 +17,28 @@ const app = {
         const test = this.filterCards("THE_SUNKEN_CITY");
         console.log(test);
         
-        const randomCards = this.selectRandomCards(20);
+        const randomCards = this.selectRandomCards(10);
         console.log(randomCards);
 
-        randomCards.forEach((card) => this.addTile(memory, card.id));
+        this.shuffleCards(randomCards);
+
+        cardSet.forEach((card) => this.addCards(memory, card.id));
     },
 
-    addTile: async function (element, id) {
+    addCards: async function (element, id) {
         const card = document.createElement("img");
         card.setAttribute("src", this.cardUrl+id+".png");
         card.setAttribute("width", "150px");
         element.appendChild(card);
+    },
 
-
+    /**
+     * 
+     * @param {*} randomCards 
+     */
+    shuffleCards: function (randomCards) {
+        cardSet = randomCards.concat(randomCards);
+        console.log(cardSet);
     },
 
     /**
