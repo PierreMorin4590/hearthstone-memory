@@ -17,18 +17,10 @@ const app = {
         console.log(randomCards);
 
         this.shuffleCards(randomCards); //return cardSet
-        // cardSet.forEach((card) => this.addCards(memory, card.id));
 
         const test = this.startGame(randomCards);
         console.log(test);
 
-    },
-
-    addCards: async function (element, id) {
-        const card = document.createElement("img");
-        card.setAttribute("src", this.cardUrl + id + ".png");
-        card.setAttribute("width", "300px");
-        element.appendChild(card);
     },
 
     /**
@@ -71,7 +63,7 @@ const app = {
         }
         console.log(grid);
 
-        // Parcourir la grille et générer les éléments HTML correspondants
+        // On génère la grille de départ
         const memory = document.querySelector('.memory');
 
         grid.forEach(row => {
