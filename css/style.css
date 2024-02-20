@@ -2,10 +2,19 @@
     border: 1px solid red;
 }
 
+header, footer {
+    text-align: center;
+}
+
 .memory {
     border: 1px solid blue;
 }
 
-.tile {
+.row {
+    display: flex;
+    justify-content: center;
+}
+
+.card {
     border: 1px solid green;
 }
