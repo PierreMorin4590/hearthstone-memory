@@ -6,6 +6,8 @@ const app = {
     cardUrl: "https://art.hearthstonejson.com/v1/render/latest/frFR/512x/",
     cardWidth: "135px",
     cardHeight: "200px",
+    card1Selected: null,
+    card2Selected: null,
 
     init: async function () {
         console.log('app.init()');
@@ -56,10 +58,10 @@ const app = {
         let cardList = cardSelected;
 
         // On mélange les cartes
-        let shuffledCards = this.shuffleCards(cardList);
+        let shuffledCards = cardSet;
         console.log(shuffledCards);
 
-        // On créé une grille 4x4
+        // On créé une grille 3x6
         for (let row = 0; row < 3; row++) {
             let newRow = []; // Créer une nouvelle ligne
             for (let col = 0; col < 6; col++) {
@@ -73,22 +75,24 @@ const app = {
         // On génère la grille de départ
         const memory = document.querySelector('.memory');
 
-        grid.forEach(row => {
+        grid.forEach((row, rowIndex) => {
             let rowElement = document.createElement('div');
             rowElement.classList.add('row');
-            row.forEach(card => {
+            row.forEach((card, colIndex) => {
                 let cardElement = document.createElement('img');
                 cardElement.classList.add('card');
-                cardElement.setAttribute("id", card.id);
+                cardElement.setAttribute("id", `${rowIndex}-${colIndex}`);
+                // cardElement.setAttribute("id", card.id);
                 cardElement.setAttribute("src", this.cardUrl + card.id + ".png");
                 cardElement.setAttribute("width", this.cardWidth);
                 cardElement.setAttribute("height", this.cardHeight);
+                cardElement.addEventListener("click", (event) => this.handleClickCard(event));
                 rowElement.appendChild(cardElement);
             });
             memory.appendChild(rowElement);
         });
 
-        setTimeout(this.hideCards, 5000);
+        setTimeout(this.hideCards, 2000);
     },
 
     /**
@@ -153,6 +157,67 @@ const app = {
 
         return randomCards;
     },
+
+    /**
+     * Fonction qui permet de vérifier si deux cartes retournées sont identiques (via URL)
+     * @param {click} event 
+     */
+    handleClickCard: function (event) {
+        const currentCard = event.currentTarget;
+        console.log(currentCard);
+
+        // Vérifier si la carte cliquée est retournée vers le bas (face cachée)
+        if (currentCard.src.includes("cardback")) {
+            // Vérifier si aucune carte n'est actuellement sélectionnée
+            if (!this.card1Selected) {
+                this.card1Selected = currentCard;
+
+                let coords = this.card1Selected.id.split("-"); //"0-1" -> ["0", "1"]
+                let r = parseInt(coords[0]);
+                let c = parseInt(coords[1]);
+
+                // Trouver l'ID de la carte correspondante dans cardSet
+                let cardId = cardSet[r * 6 + c].id;
+                let cardImageUrl = this.cardUrl + cardId + ".png";
+
+                this.card1Selected.src = cardImageUrl;
+                console.log(this.card1Selected.src);
+            } else if (!this.card2Selected && currentCard !== this.card1Selected) {
+                this.card2Selected = currentCard;
+
+                let coords = this.card2Selected.id.split("-"); //"0-1" -> ["0", "1"]
+                let r = parseInt(coords[0]);
+                let c = parseInt(coords[1]);
+
+                // Trouver l'ID de la carte correspondante dans cardSet
+                let cardId = cardSet[r * 6 + c].id;
+                let cardImageUrl = this.cardUrl + cardId + ".png";
+
+                this.card2Selected.src = cardImageUrl;
+                console.log(this.card2Selected.src);
+                setTimeout(() => {
+                    this.update();
+                }, 1000);
+            }
+        }
+    },
+
+    /**
+     * Fonction qui retourne deux cartes qui ne sont pas identiques
+     */
+    update: function () {
+        // Si deux cartes n'ont pas la même URL, elles sont retournées
+        if (this.card1Selected.src != this.card2Selected.src) {
+            this.card1Selected.src = "images/cardback_0.png";
+            this.card2Selected.src = "images/cardback_0.png";
+            // errors += 1;
+            // document.getElementById("errors").innerText = errors;
+        }
+
+        // Réinitialisation
+        this.card1Selected = null;
+        this.card2Selected = null;
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => app.init());
