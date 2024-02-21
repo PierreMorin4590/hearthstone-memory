@@ -4,6 +4,8 @@ const app = {
     apiUrl: "https://api.hearthstonejson.com/v1/190920/frFR/cards.collectible.json",
     data: null,
     cardUrl: "https://art.hearthstonejson.com/v1/render/latest/frFR/512x/",
+    cardWidth: "135px",
+    cardHeight: "200px",
 
     init: async function () {
         console.log('app.init()');
@@ -77,12 +79,27 @@ const app = {
             row.forEach(card => {
                 let cardElement = document.createElement('img');
                 cardElement.classList.add('card');
+                cardElement.setAttribute("id", card.id);
                 cardElement.setAttribute("src", this.cardUrl + card.id + ".png");
-                cardElement.setAttribute("width", "135px");
-                cardElement.textContent = card;
+                cardElement.setAttribute("width", this.cardWidth);
+                cardElement.setAttribute("height", this.cardHeight);
                 rowElement.appendChild(cardElement);
             });
             memory.appendChild(rowElement);
+        });
+
+        setTimeout(this.hideCards, 5000);
+    },
+
+    /**
+     * Fonction qui retourne les cartes en début de partie
+     */
+    hideCards: function () {
+        let cards = document.querySelectorAll(".card");
+        cards.forEach(card => {
+            card.setAttribute("src", "images/cardback_0.png");
+            card.style.width = this.cardWidth;
+            card.style.heigth = this.cardHeight;
         });
     },
 
