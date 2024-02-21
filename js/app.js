@@ -25,11 +25,12 @@ const app = {
 
     /**
      * Fonction qui double puis mélange les cartes
-     * @param {*} randomCards 
+     * @param {array} cardSelected : Tableau qui passe les cartes qu'on veut mélanger
+     * @returns {array} cardeSet : Tableau avec les cartes mélangées (index random)
      */
-    shuffleCards: function (cardList) {
+    shuffleCards: function (cardSelected) {
         // On double chaque carte 
-        cardSet = cardList.concat(cardList);
+        cardSet = cardSelected.concat(cardSelected);
 
         for (let i = 0; i < cardSet.length; i++) {
             // On randomise l'index
@@ -44,6 +45,10 @@ const app = {
         return cardSet;
     },
 
+    /**
+     * Fonction qui lance le jeu
+     * @param {array} cardSelected : Tableau qui passe les cartes
+     */
     startGame: function (cardSelected) {
         let grid = []; // variable pour stocker la grille de jeu
         let cardList = cardSelected;
@@ -52,7 +57,7 @@ const app = {
         let shuffledCards = this.shuffleCards(cardList);
         console.log(shuffledCards);
 
-        // Créer une grille 4x4
+        // On créé une grille 4x4
         for (let row = 0; row < 3; row++) {
             let newRow = []; // Créer une nouvelle ligne
             for (let col = 0; col < 6; col++) {
@@ -83,7 +88,7 @@ const app = {
 
     /**
      * Fonction asynchrone qui récupère les données de l'API HearthstoneJSON api.hearthstonejson.com/v1/ 
-     * @returns 
+     * @returns {array} apiHearthstone : Tableau avec toutes les cartes Hearthstone ever <3
      */
     getData: async function () {
         try {
@@ -104,19 +109,21 @@ const app = {
     },
 
     /**
-     * Filtrer les cartes par ensemble (set)
-     * @param {string} set Nom de l'ensemble à filtrer
+     * Fonction qui permet de filtrer les cartes
+     * @param {string} filter : Nom du paramètre à filtrer
+     * @returns {array} cardsFiltered : Tableau avec les cartes filtrées
      */
     filterCards: function (filter) {
         const cardsFiltered = this.data.filter(card => card.filter === filter);
         console.log(cardsFiltered);
+
         return cardsFiltered;
     },
 
     /**
-     * Sélectionner un nombre donné de cartes au hasard parmi les données récupérées
-     * @param {number} count Nombre de cartes à sélectionner
-     * @returns {Array} Tableau des cartes sélectionnées
+     * SFonction qui sélectionne un nombre donné de cartes au hasard parmi les données récupérées
+     * @param {number} count : Nombre de cartes à sélectionner
+     * @returns {array} randomCards : Tableau des cartes sélectionnées
      */
     selectRandomCards: function (count) {
         const randomCards = [];
