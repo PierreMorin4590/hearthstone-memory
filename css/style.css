@@ -20,12 +20,28 @@ span {
 
 .playButton {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'BelweBT-Bold', cursive;
+    font-size: 3em;
+    color: white;
+    text-shadow: 0 0 15px #000;
+}
+
+.playButton p {
+    cursor: pointer;
+    margin-top: 0;
+}
+
+.playButton img {
+    cursor: pointer;
 }
 
 .hidden {
     display: none;
 }
+
+
 
 .row {
     display: flex;
