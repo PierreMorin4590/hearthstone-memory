@@ -103,7 +103,7 @@ const app = {
     hideCards: function () {
         let cards = document.querySelectorAll(".card");
         cards.forEach(card => {
-            card.setAttribute("src", "images/cardback_0.png");
+            card.setAttribute("src", "images/cardback_0-resized.png");
             card.style.width = this.cardWidth;
             card.style.heigth = this.cardHeight;
         });
@@ -210,8 +210,8 @@ const app = {
     update: function () {
         // Si deux cartes n'ont pas la même URL, elles sont retournées
         if (this.card1Selected.src != this.card2Selected.src) {
-            this.card1Selected.src = "images/cardback_0.png";
-            this.card2Selected.src = "images/cardback_0.png";
+            this.card1Selected.src = "images/cardback_0-resized.png";
+            this.card2Selected.src = "images/cardback_0-resized.png";
             // errors += 1;
             // document.getElementById("errors").innerText = errors;
         }
