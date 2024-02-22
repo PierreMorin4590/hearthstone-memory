@@ -22,8 +22,10 @@ const app = {
 
         this.shuffleCards(randomCards); //return cardSet
 
-        const test = this.startGame(randomCards);
-        console.log(test);
+        // this.startGame(randomCards);
+
+        const playButton = document.querySelector(".playButton");
+        playButton.addEventListener("click", (event) => this.handlePlayGame(event, playButton));
 
     },
 
@@ -92,7 +94,7 @@ const app = {
             memory.appendChild(rowElement);
         });
 
-        setTimeout(this.hideCards, 2000);
+        setTimeout(this.hideCards, 5500);
     },
 
     /**
@@ -217,6 +219,13 @@ const app = {
         // Réinitialisation
         this.card1Selected = null;
         this.card2Selected = null;
+    },
+
+    handlePlayGame: function (event, playButton) {
+        console.log("J'ai cliqué ! ");
+        this.startGame(cardSet);
+        console.log(playButton);
+        playButton.classList.add("hidden");
     }
 }
 

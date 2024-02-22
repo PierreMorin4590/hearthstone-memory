@@ -1,13 +1,30 @@
-* {
+/* {
     border: 1px solid red;
+} */
+
+html { 
+    min-height: 100%;
+    background-image: url('../images//Hearthstone-wallpaper.jpg');
+    background-size: cover;
 }
 
 header, footer {
     text-align: center;
+    font-family: 'BelweBT-Bold', cursive;
+    color: white;
 }
 
-.memory {
-    border: 1px solid blue;
+span {
+    color: red;
+}
+
+.playButton {
+    display: flex;
+    justify-content: center;
+}
+
+.hidden {
+    display: none;
 }
 
 .row {
@@ -15,6 +32,6 @@ header, footer {
     justify-content: center;
 }
 
-.card {
+/* .card {
     border: 1px solid green;
-}
+} */
