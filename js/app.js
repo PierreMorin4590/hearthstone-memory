@@ -4,10 +4,12 @@ const app = {
     apiUrl: "https://api.hearthstonejson.com/v1/190920/frFR/cards.collectible.json",
     data: null,
     cardUrl: "https://art.hearthstonejson.com/v1/render/latest/frFR/512x/",
-    cardWidth: "135px",
-    cardHeight: "200px",
+    cardWidth: "120px",
+    cardHeight: "190px",
     card1Selected: null,
     card2Selected: null,
+    timerInterval: null,
+    pairsFound: 0,
 
     init: async function () {
         console.log('app.init()');
@@ -22,10 +24,10 @@ const app = {
 
         this.shuffleCards(randomCards); //return cardSet
 
-        // this.startGame(randomCards);
-
+        const data = document.querySelector(".data");
         const playButton = document.querySelector(".playButton");
-        playButton.addEventListener("click", (event) => this.handlePlayGame(event, playButton));
+        playButton.addEventListener("click", (event) => this.handlePlayGame(event, playButton, data));
+
 
     },
 
@@ -95,6 +97,24 @@ const app = {
         });
 
         setTimeout(this.hideCards, 5500);
+    },
+
+    endGame: function () {
+
+        this.stopTimer();
+    },
+
+    startTimer: function () {
+        let seconds = 0;
+        const timerElement = document.querySelector('.timer');
+        this.timerInterval = setInterval(() => {
+            seconds++;
+            timerElement.innerText = `Time: ${seconds} sec`;
+        }, 1000);
+    },
+
+    stopTimer: function () {
+        clearInterval(this.timerInterval);
     },
 
     /**
@@ -198,7 +218,7 @@ const app = {
                 this.card2Selected.src = cardImageUrl;
                 console.log(this.card2Selected.src);
                 setTimeout(() => {
-                    this.update();
+                    this.checkPairs();
                 }, 1000);
             }
         }
@@ -207,13 +227,21 @@ const app = {
     /**
      * Fonction qui retourne deux cartes qui ne sont pas identiques
      */
-    update: function () {
+    checkPairs: function () {
         // Si deux cartes n'ont pas la même URL, elles sont retournées
-        if (this.card1Selected.src != this.card2Selected.src) {
+        if (this.card1Selected.src === this.card2Selected.src) {
+            // On incrémente les paires
+            this.pairsFound++;
+            if (this.pairsFound === 9) {
+                this.endGame();
+            }
+        } else {
+
             this.card1Selected.src = "images/cardback_0-resized.png";
             this.card2Selected.src = "images/cardback_0-resized.png";
-            // errors += 1;
-            // document.getElementById("errors").innerText = errors;
+            errors = parseInt(document.querySelector(".nbErrors").innerText);
+            errors += 1;
+            document.querySelector(".nbErrors").innerText = errors;
         }
 
         // Réinitialisation
@@ -221,11 +249,12 @@ const app = {
         this.card2Selected = null;
     },
 
-    handlePlayGame: function (event, playButton) {
-        console.log("J'ai cliqué ! ");
+    handlePlayGame: function (event, playButton, data) {
         this.startGame(cardSet);
+        this.startTimer();
         console.log(playButton);
         playButton.classList.add("hidden");
+        data.classList.remove("hidden");
     }
 }
 

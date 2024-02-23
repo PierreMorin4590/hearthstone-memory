@@ -11,8 +11,7 @@ html {
 header, footer {
     display: flex;
     justify-content: center;
-    font-family: 'BelweBT-Bold', serif;
-    font-family: "Berkshire Swash", serif;
+    font-family: 'BelweBT-Bold', cursive;
     color: white;
     text-shadow: 0 0 25px #000;
 }
@@ -21,12 +20,25 @@ span {
     color: red;
 }
 
+.data {
+    display: flex;
+    justify-content: center;
+    gap: 3em;
+    font-family: 'BelweBT-Bold', cursive;
+    font-size: 2em;
+    color: white;
+    text-shadow: 0 0 15px #000;
+}
+
+.data p {
+    margin: 0;
+}
+
 .playButton {
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-family: 'BelweBT-Bold', serif;
-    font-family: "Berkshire Swash", serif;
+    font-family: 'BelweBT-Bold', cursive;
     font-size: 3em;
     color: white;
     text-shadow: 0 0 15px #000;
