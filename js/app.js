@@ -27,8 +27,6 @@ const app = {
         const data = document.querySelector(".data");
         const playButton = document.querySelector(".playButton");
         playButton.addEventListener("click", (event) => this.handlePlayGame(event, playButton, data));
-
-
     },
 
     /**
@@ -100,8 +98,13 @@ const app = {
     },
 
     endGame: function () {
-
         this.stopTimer();
+        const memory = document.querySelector(".memory");
+        memory.classList.add("hidden");
+        const data = document.querySelector(".data");
+        data.classList.add("hidden");
+        const score = document.querySelector(".score");
+        score.classList.remove("hidden");
     },
 
     startTimer: function () {
