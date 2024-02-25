@@ -4,8 +4,8 @@ const app = {
     apiUrl: "https://api.hearthstonejson.com/v1/190920/frFR/cards.collectible.json",
     data: null,
     cardUrl: "https://art.hearthstonejson.com/v1/render/latest/frFR/512x/",
-    cardWidth: "120px",
-    cardHeight: "190px",
+    cardWidth: "auto",
+    cardHeight: "20vh",
     card1Selected: null,
     card2Selected: null,
     timerInterval: null,
@@ -84,10 +84,9 @@ const app = {
                 let cardElement = document.createElement('img');
                 cardElement.classList.add('card');
                 cardElement.setAttribute("id", `${rowIndex}-${colIndex}`);
-                // cardElement.setAttribute("id", card.id);
                 cardElement.setAttribute("src", this.cardUrl + card.id + ".png");
-                cardElement.setAttribute("width", this.cardWidth);
-                cardElement.setAttribute("height", this.cardHeight);
+                cardElement.style.width = this.cardWidth;
+                cardElement.style.height = this.cardHeight;
                 cardElement.addEventListener("click", (event) => this.handleClickCard(event));
                 rowElement.appendChild(cardElement);
             });
