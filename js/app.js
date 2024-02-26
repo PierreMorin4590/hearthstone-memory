@@ -104,11 +104,18 @@ const app = {
         data.classList.add("hidden");
         const score = document.querySelector(".score");
         score.classList.remove("hidden");
+
+        // Mettre à jour les statistiques
+        const finalTime = document.querySelector(".finalTime");
+        const finalErrors = document.querySelector(".finalErrors");
+
+        finalTime.textContent = `${document.querySelector('.timerValue').innerText}`;
+        finalErrors.textContent = `${document.querySelector('.errorsValue').innerText}`;
     },
 
     startTimer: function () {
         let seconds = 0;
-        const timerElement = document.querySelector('.timer');
+        const timerElement = document.querySelector('.timerValue');
         this.timerInterval = setInterval(() => {
             seconds++;
             timerElement.innerText = `Time: ${seconds} sec`;
@@ -127,7 +134,7 @@ const app = {
         cards.forEach(card => {
             card.setAttribute("src", "images/cardback_0-resized.png");
             card.style.width = this.cardWidth;
-            card.style.heigth = this.cardHeight;
+            card.style.height = this.cardHeight;
         });
     },
 
@@ -241,9 +248,9 @@ const app = {
 
             this.card1Selected.src = "images/cardback_0-resized.png";
             this.card2Selected.src = "images/cardback_0-resized.png";
-            errors = parseInt(document.querySelector(".nbErrors").innerText);
+            errors = parseInt(document.querySelector(".errorsValue").innerText);
             errors += 1;
-            document.querySelector(".nbErrors").innerText = errors;
+            document.querySelector(".errorsValue").innerText = errors;
         }
 
         // Réinitialisation

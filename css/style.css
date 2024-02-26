@@ -4,7 +4,7 @@
 
 html { 
     height: 100%;
-    background-image: url('../images//Hearthstone-wallpaper.jpg');
+    background-image: url('../images/Hearthstone-wallpaper.jpg');
     background-size: cover;
 }
 
@@ -85,4 +85,24 @@ span {
 
 .memory {
     margin-top: 2em;
+}
+
+.score {
+    position: relative;
+}
+
+.stats {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-family: 'BelweBT-Bold', cursive;
+    font-size: 1.5em;
+    color: white;
+    text-shadow: 0 0 10px #000;
+}
+
+.stats p {
+    margin: 0.5em;
 }
