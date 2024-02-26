@@ -10,10 +10,12 @@ const app = {
     card2Selected: null,
     timerInterval: null,
     pairsFound: 0,
-    currentCardback: this.currentCardback = "images/cardback_" + Math.floor(Math.random() * 7) + ".png",
+    currentCardback: this.currentCardback = "images/cardback_" + Math.floor(Math.random() * 8) + ".png",
 
     init: async function () {
         console.log('app.init()');
+        
+        
 
         this.data = await this.getData();
         console.log(this.data);
@@ -28,8 +30,6 @@ const app = {
         const data = document.querySelector(".data");
         const playButton = document.querySelector(".playButton");
         playButton.addEventListener("click", (event) => this.handlePlayGame(event, playButton, data));
-
-        console.log(this.currentCardback);
     },
 
     /**
@@ -121,7 +121,7 @@ const app = {
         const timerElement = document.querySelector('.timerValue');
         this.timerInterval = setInterval(() => {
             seconds++;
-            timerElement.innerText = `Time: ${seconds} sec`;
+            timerElement.innerText = `${seconds} sec`;
         }, 1000);
     },
 
@@ -133,18 +133,13 @@ const app = {
      * Fonction qui retourne les cartes en début de partie
      */
     hideCards: function () {
-
-        console.log(currentCardback);
-        console.log(this.currentCardback);
         let cards = document.querySelectorAll(".card");
         cards.forEach(card => {
             card.setAttribute("src", this.currentCardback);
-            console.log(currentCardback);
+            console.log(this.currentCardback);
             card.style.width = this.cardWidth;
             card.style.height = this.cardHeight;
         });
-
-        
     },
 
     /**
