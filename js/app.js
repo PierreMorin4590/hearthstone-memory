@@ -10,6 +10,7 @@ const app = {
     card2Selected: null,
     timerInterval: null,
     pairsFound: 0,
+    currentCardback: this.currentCardback = "images/cardback_" + Math.floor(Math.random() * 7) + ".png",
 
     init: async function () {
         console.log('app.init()');
@@ -27,6 +28,8 @@ const app = {
         const data = document.querySelector(".data");
         const playButton = document.querySelector(".playButton");
         playButton.addEventListener("click", (event) => this.handlePlayGame(event, playButton, data));
+
+        console.log(this.currentCardback);
     },
 
     /**
@@ -130,12 +133,18 @@ const app = {
      * Fonction qui retourne les cartes en début de partie
      */
     hideCards: function () {
+
+        console.log(currentCardback);
+        console.log(this.currentCardback);
         let cards = document.querySelectorAll(".card");
         cards.forEach(card => {
-            card.setAttribute("src", "images/cardback_0-resized.png");
+            card.setAttribute("src", this.currentCardback);
+            console.log(currentCardback);
             card.style.width = this.cardWidth;
             card.style.height = this.cardHeight;
         });
+
+        
     },
 
     /**
@@ -237,6 +246,7 @@ const app = {
      * Fonction qui retourne deux cartes qui ne sont pas identiques
      */
     checkPairs: function () {
+
         // Si deux cartes n'ont pas la même URL, elles sont retournées
         if (this.card1Selected.src === this.card2Selected.src) {
             // On incrémente les paires
@@ -245,9 +255,8 @@ const app = {
                 this.endGame();
             }
         } else {
-
-            this.card1Selected.src = "images/cardback_0-resized.png";
-            this.card2Selected.src = "images/cardback_0-resized.png";
+            this.card1Selected.src = this.currentCardback;
+            this.card2Selected.src = this.currentCardback;
             errors = parseInt(document.querySelector(".errorsValue").innerText);
             errors += 1;
             document.querySelector(".errorsValue").innerText = errors;
