@@ -14,8 +14,8 @@ const app = {
 
     init: async function () {
         console.log('app.init()');
-        
-        
+
+
 
         this.data = await this.getData();
         console.log(this.data);
@@ -27,9 +27,8 @@ const app = {
 
         this.shuffleCards(randomCards); //return cardSet
 
-        const data = document.querySelector(".data");
         const playButton = document.querySelector(".playButton");
-        playButton.addEventListener("click", (event) => this.handlePlayGame(event, playButton, data));
+        playButton.addEventListener("click", (event) => this.handlePlayGame(event));
     },
 
     /**
@@ -103,10 +102,19 @@ const app = {
         this.stopTimer();
         const memory = document.querySelector(".memory");
         memory.classList.add("hidden");
+
+        // On supprime toutes les lignes de la mémoire
+        while (memory.firstChild) {
+            memory.removeChild(memory.firstChild);
+        }
+
         const data = document.querySelector(".data");
         data.classList.add("hidden");
         const score = document.querySelector(".score");
         score.classList.remove("hidden");
+        const newGame = document.querySelector(".newGame");
+        newGame.classList.remove("hidden");
+        newGame.addEventListener("click", (event) => this.handleNewGame(event));
 
         // Mettre à jour les statistiques
         const finalTime = document.querySelector(".finalTime");
@@ -114,6 +122,24 @@ const app = {
 
         finalTime.textContent = `${document.querySelector('.timerValue').innerText}`;
         finalErrors.textContent = `${document.querySelector('.errorsValue').innerText}`;
+
+        // Réinitialiser les scores
+        document.querySelector(".errorsValue").innerText = "0";
+        document.querySelector(".timerValue").innerText = "0 sec";
+        this.pairsFound = 0;
+    },
+
+    /**
+     * Fonction pour lancer une nouvelle partie à partir de l'écran des scores
+     */
+    handleNewGame: function () {
+        console.log("Coucou !");
+        const score = document.querySelector(".score");
+        score.classList.add("hidden");
+        const newGame = document.querySelector(".newGame");
+        newGame.classList.add("hidden");
+        const playButton = document.querySelector(".playButton");
+        playButton.classList.remove("hidden");
     },
 
     startTimer: function () {
@@ -262,12 +288,16 @@ const app = {
         this.card2Selected = null;
     },
 
-    handlePlayGame: function (event, playButton, data) {
+    handlePlayGame: function (event) {
+        const data = document.querySelector(".data");
+        data.classList.remove("hidden");
+        const playButton = document.querySelector(".playButton");
+        playButton.classList.add("hidden");
+        const memory = document.querySelector(".memory");
+        memory.classList.remove("hidden");
         this.startGame(cardSet);
         this.startTimer();
         console.log(playButton);
-        playButton.classList.add("hidden");
-        data.classList.remove("hidden");
     }
 }
 
