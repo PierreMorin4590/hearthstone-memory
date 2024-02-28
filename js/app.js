@@ -22,10 +22,10 @@ const app = {
 
         // const test = this.filterCards("THE_SUNKEN_CITY");
 
-        const randomCards = this.selectRandomCards(9);
-        console.log(randomCards);
+        // const randomCards = this.selectRandomCards(9);
+        // console.log(randomCards);
 
-        this.shuffleCards(randomCards); //return cardSet
+        // this.shuffleCards(randomCards); //return cardSet
 
         const playButton = document.querySelector(".playButton");
         playButton.addEventListener("click", (event) => this.handlePlayGame(event));
@@ -295,7 +295,14 @@ const app = {
         playButton.classList.add("hidden");
         const memory = document.querySelector(".memory");
         memory.classList.remove("hidden");
-        this.startGame(cardSet);
+
+        // Obtenir de nouvelles cartes aléatoires
+        const randomCards = this.selectRandomCards(9);
+
+        // Mélanger les cartes
+        const shuffledCards = this.shuffleCards(randomCards);
+
+        this.startGame(shuffledCards);
         this.startTimer();
         console.log(playButton);
     }
