@@ -10,25 +10,63 @@ const app = {
     card2Selected: null,
     timerInterval: null,
     pairsFound: 0,
-    currentCardback: this.currentCardback = "images/cardback_" + Math.floor(Math.random() * 8) + ".png",
+    currentCardback: this.currentCardback = "images/cardback_" + Math.floor(Math.random() * 4) + ".png",
 
     init: async function () {
         console.log('app.init()');
-
-
 
         this.data = await this.getData();
         console.log(this.data);
 
         // const test = this.filterCards("THE_SUNKEN_CITY");
 
-        // const randomCards = this.selectRandomCards(9);
-        // console.log(randomCards);
-
-        // this.shuffleCards(randomCards); //return cardSet
-
         const playButton = document.querySelector(".playButton");
         playButton.addEventListener("click", (event) => this.handlePlayGame(event));
+    },
+
+    /**
+     * Fonction asynchrone qui récupère les données de l'API HearthstoneJSON api.hearthstonejson.com/v1/ 
+     * @returns {array} apiHearthstone : Tableau avec toutes les cartes Hearthstone ever <3
+     */
+    getData: async function () {
+        try {
+            // fetch retourne une promesse (objet)
+            const response = await fetch(this.apiUrl);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch : ${response.status}`);
+            }
+
+            // On attend la résolution de la promesse et on récupère les données
+            const apiHearthstone = await response.json();
+
+            return apiHearthstone;
+
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+
+    /**
+     * Fonction qui permet de lancer une partie
+     * @param {*} event 
+     */
+    handlePlayGame: function (event) {
+        const data = document.querySelector(".data");
+        data.classList.remove("hidden");
+        const playButton = document.querySelector(".playButton");
+        playButton.classList.add("hidden");
+        const memory = document.querySelector(".memory");
+        memory.classList.remove("hidden");
+
+        // Obtenir de nouvelles cartes aléatoires
+        const randomCards = this.selectRandomCards(9);
+
+        // Mélanger les cartes
+        const shuffledCards = this.shuffleCards(randomCards);
+
+        this.startGame(shuffledCards);
+        this.startTimer();
+        console.log(playButton);
     },
 
     /**
@@ -98,6 +136,9 @@ const app = {
         setTimeout(this.hideCards, 5500);
     },
 
+    /**
+     * Fonction qui met fin à la partie et affiche le score
+     */
     endGame: function () {
         this.stopTimer();
         const memory = document.querySelector(".memory");
@@ -130,7 +171,7 @@ const app = {
     },
 
     /**
-     * Fonction pour lancer une nouvelle partie à partir de l'écran des scores
+     * Fonction pour revenir à l'écran d'accueil depuis l'écran des scores
      */
     handleNewGame: function () {
         console.log("Coucou !");
@@ -142,6 +183,9 @@ const app = {
         playButton.classList.remove("hidden");
     },
 
+    /**
+     * Fonction qui lance le timer
+     */
     startTimer: function () {
         let seconds = 0;
         const timerElement = document.querySelector('.timerValue');
@@ -151,6 +195,9 @@ const app = {
         }, 1000);
     },
 
+    /**
+     * Fonction qui stoppe le timer
+     */
     stopTimer: function () {
         clearInterval(this.timerInterval);
     },
@@ -168,27 +215,7 @@ const app = {
         });
     },
 
-    /**
-     * Fonction asynchrone qui récupère les données de l'API HearthstoneJSON api.hearthstonejson.com/v1/ 
-     * @returns {array} apiHearthstone : Tableau avec toutes les cartes Hearthstone ever <3
-     */
-    getData: async function () {
-        try {
-            // fetch retourne une promesse (objet)
-            const response = await fetch(this.apiUrl);
-            if (!response.ok) {
-                throw new Error(`Failed to fetch : ${response.status}`);
-            }
-
-            // On attend la résolution de la promesse et on récupère les données
-            const apiHearthstone = await response.json();
-
-            return apiHearthstone;
-
-        } catch (error) {
-            throw new Error(error.message);
-        }
-    },
+    
 
     /**
      * Fonction qui permet de filtrer les cartes
@@ -203,7 +230,7 @@ const app = {
     },
 
     /**
-     * SFonction qui sélectionne un nombre donné de cartes au hasard parmi les données récupérées
+     * Fonction qui sélectionne un nombre donné de cartes au hasard parmi les données récupérées
      * @param {number} count : Nombre de cartes à sélectionner
      * @returns {array} randomCards : Tableau des cartes sélectionnées
      */
@@ -286,25 +313,6 @@ const app = {
         // Réinitialisation
         this.card1Selected = null;
         this.card2Selected = null;
-    },
-
-    handlePlayGame: function (event) {
-        const data = document.querySelector(".data");
-        data.classList.remove("hidden");
-        const playButton = document.querySelector(".playButton");
-        playButton.classList.add("hidden");
-        const memory = document.querySelector(".memory");
-        memory.classList.remove("hidden");
-
-        // Obtenir de nouvelles cartes aléatoires
-        const randomCards = this.selectRandomCards(9);
-
-        // Mélanger les cartes
-        const shuffledCards = this.shuffleCards(randomCards);
-
-        this.startGame(shuffledCards);
-        this.startTimer();
-        console.log(playButton);
     }
 }
 
