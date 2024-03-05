@@ -88,8 +88,7 @@ span {
 }
 
 .credit {
-    position: absolute;
-    bottom: 1%;
+    margin-top: 1em;
     text-align: center;
 }
 

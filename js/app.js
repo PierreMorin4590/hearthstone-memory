@@ -125,6 +125,7 @@ const app = {
                 cardElement.classList.add('card');
                 cardElement.setAttribute("id", `${rowIndex}-${colIndex}`);
                 cardElement.setAttribute("src", this.cardUrl + card.id + ".png");
+                cardElement.setAttribute("draggable", false);
                 cardElement.style.width = this.cardWidth;
                 cardElement.style.height = this.cardHeight;
                 cardElement.addEventListener("click", (event) => this.handleClickCard(event));
