@@ -20,6 +20,10 @@ span {
     color: red;
 }
 
+.colorWhite {
+    color: white;
+}
+
 .data {
     display: flex;
     justify-content: center;
