@@ -72,7 +72,7 @@ const app = {
     /**
      * Fonction qui double puis mélange les cartes
      * @param {array} cardSelected : Tableau qui passe les cartes qu'on veut mélanger
-     * @returns {array} cardeSet : Tableau avec les cartes mélangées (index random)
+     * @returns {array} cardSet : Tableau avec les cartes mélangées (index random)
      */
     shuffleCards: function (cardSelected) {
         // On double chaque carte 
